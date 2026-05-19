@@ -6,7 +6,7 @@
     <title>Tristan Damour - Portfolio</title>
     <style>
         :root {
-            --bleu-principal: #9dbed3;
+            --bleu-principal: #67ADD0;
             --texte-noir: #1a1a1a;
             --transition-douce: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             --gris-tres-clair: #fcfcfc;
@@ -19,30 +19,69 @@
         html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'futura', Helvetica, Arial, sans-serif;
             background-color: white;
             color: var(--texte-noir);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* --- NAVIGATION & BURGER --- */
+        /* --- NAVIGATION FIXE (ORDINATEUR & MOBILE) --- */
+        .navbar { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%;
+            padding: 30px 5%; /* Aligné sur le contenu du Hero (5%) */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 4000; 
+        }
+        
+        .logo-link { display: block; width: 45px; transition: var(--transition-douce); }
+        .logo-svg { width: 100%; filter: brightness(0) invert(1); transition: var(--transition-douce); }
+        .logo-dark { filter: none; }
+        .logo-hidden-mobile { opacity: 0; visibility: hidden; transform: translateX(-20px); }
+
+        /* Navigation classique (Ordinateur) */
+        .desktop-nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .desktop-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            font-weight: 700;
+            transition: opacity 0.3s ease, color 0.3s ease;
+        }
+
+        .desktop-nav a:hover {
+            opacity: 0.7;
+        }
+
+        /* Quand on scroll, les liens de l'ordinateur passent en noir */
+        .desktop-nav.is-dark a {
+            color: var(--texte-noir);
+        }
+
+        /* --- NAVIGATION BURGER (MOBILE UNIQUEMENT) --- */
         .burger-trigger {
             position: fixed;
-            top: 30px;
-            right: 30px;
+            top: 38px;
+            right: 5%;
             width: 30px;
             height: 20px;
             background: none;
             border: none;
             cursor: pointer;
             z-index: 5000;
-            display: flex;
+            display: none; /* Masqué par défaut sur ordinateur */
             flex-direction: column;
             justify-content: space-between;
         }
-
-        @media (min-width: 1025px) { .burger-trigger { display: none; } }
 
         .burger-trigger span {
             display: block;
@@ -59,6 +98,7 @@
         .burger-active span:nth-child(2) { opacity: 0; }
         .burger-active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background: var(--texte-noir) !important; }
 
+        /* Menu plein écran mobile */
         .full-menu {
             position: fixed;
             inset: 0;
@@ -82,19 +122,47 @@
             text-transform: uppercase;
         }
 
-        .navbar { position: fixed; top: 20px; left: 20px; z-index: 1000; }
-        .logo-link { display: block; width: 45px; transition: var(--transition-douce); }
-        .logo-svg { width: 100%; filter: brightness(0) invert(1); transition: var(--transition-douce); }
-        .logo-dark { filter: none; }
-        .logo-hidden-mobile { opacity: 0; visibility: hidden; transform: translateX(-20px); }
-
         /* --- SECTIONS --- */
         .section-hero {
             background-color: var(--bleu-principal);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 120px 20px 40px 20px; /* Ajout de padding top pour pas que la nav colle au titre */
+            position: relative;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            color: white;
+            padding: 0 5%;
+        }
+
+        .hero-title {
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-title .main-title {
+            font-size: clamp(3.5rem, 10vw, 10.5rem);
+            display: block;
+        }
+
+        .hero-title .sub-title {
+            font-size: clamp(2rem, 6vw, 6rem);
+            display: block;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.25rem);
+            font-weight: 500;
+            opacity: 0.9;
         }
 
         .section-white { min-height: 100vh; padding: 100px 8%; }
@@ -168,7 +236,7 @@
         .mosaic-item:hover .mosaic-overlay { opacity: 1; }
         .mosaic-item:hover h3, .mosaic-item:hover p { transform: translateY(0); }
 
-        /* --- STYLES MODALE & CARROUSEL --- */
+        /* --- MODALE --- */
         .modal {
             display: none;
             position: fixed;
@@ -242,8 +310,16 @@
         .modal-info { padding: 30px; text-align: center; }
         .modal-info h3 { text-transform: uppercase; color: var(--bleu-principal); margin-bottom: 10px; }
 
-        /* --- RESPONSIVE --- */
+        /* --- RESPONSIVE / BREAKPOINTS --- */
         @media (max-width: 1100px) { .project-mosaic { columns: 2; } }
+        
+        /* Passage en mode Mobile/Tablette (<= 1024px) */
+        @media (max-width: 1024px) {
+            .desktop-nav { display: none !important; } /* Cache la navigation texte */
+            .burger-trigger { display: flex !important; } /* Affiche le bouton burger */
+            .navbar { padding: 20px; }
+        }
+        
         @media (max-width: 768px) {
             .project-mosaic { columns: 1; }
             .section-white { padding: 60px 20px; }
@@ -270,10 +346,23 @@
         <a href="#accueil" class="logo-link" id="logoLink">
             <img src="logo.svg" alt="Logo" class="logo-svg" id="mainLogo">
         </a>
+        
+        <nav class="desktop-nav" id="desktopNav">
+            <a href="#accueil">Accueil</a>
+            <a href="#projets">Projets</a>
+            <a href="#a-propos">À propos</a>
+            <a href="#contact">Contact</a>
+        </nav>
     </header>
 
     <section class="section-hero" id="accueil">
-        <img src="texte.svg" alt="Tristan Damour" style="max-width: 600px; width: 85%; filter: brightness(0) invert(1);">
+        <div class="hero-container">
+            <h1 class="hero-title">
+                <span class="main-title">Portfolio</span>
+                <span class="sub-title">Tristan Damour</span>
+            </h1>
+            <div class="hero-subtitle">Graphiste / Élève en Terminale RPIP</div>
+        </div>
     </section>
 
     <section class="section-white" id="a-propos">
@@ -311,7 +400,6 @@
         </div>
     </section>
 
-    <!-- MODALE -->
     <div id="projectModal" class="modal">
         <span class="modal-close">&times;</span>
         <div class="modal-content">
@@ -327,10 +415,9 @@
         </div>
     </div>
 
-    <script>
-        // DONNÉES CARROUSEL
+<script>
         const projectData = {
-            "p1": { title: "Projet 01", desc: "Description de l'illustration et du concept.", images: ["img/img_01.jpg", "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=1000"] },
+            "p1": { title: "Projet 01", desc: "Description de l'illustration et du concept.", images: ["img/img_01.jpg", "img/boite_2.jpg"] },
             "p2": { title: "Projet 02", desc: "Travail sur la typographie moderne.", images: ["https://images.unsplash.com/photo-1633167606207-d840b5070fc2?w=1000", "https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?w=1000"] },
             "p3": { title: "Projet 03", desc: "Art numérique et compositions.", images: ["https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=1000"] },
             "p4": { title: "Projet 04", desc: "Épure et minimalisme visuel.", images: ["https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1000"] },
@@ -342,6 +429,7 @@
         const fullMenu = document.getElementById('fullMenu');
         const mainLogo = document.getElementById('mainLogo');
         const logoLink = document.getElementById('logoLink');
+        const desktopNav = document.getElementById('desktopNav');
         const heroSection = document.getElementById('accueil');
         const modal = document.getElementById('projectModal');
         const slideContainer = document.getElementById('carouselSlide');
@@ -402,10 +490,12 @@
             const heroBottom = heroSection.getBoundingClientRect().bottom;
             if (heroBottom <= 60) {
                 burgerBtn.classList.add('is-dark');
+                desktopNav.classList.add('is-dark'); // Les liens ordi passent en noir au scroll
                 if (window.innerWidth <= 768) logoLink.classList.add('logo-hidden-mobile');
                 else mainLogo.classList.add('logo-dark');
             } else {
                 burgerBtn.classList.remove('is-dark');
+                desktopNav.classList.remove('is-dark'); // Les liens ordi redeviennent blancs sur le bleu
                 mainLogo.classList.remove('logo-dark');
                 logoLink.classList.remove('logo-hidden-mobile');
             }
@@ -418,6 +508,7 @@
                 document.body.style.overflow = '';
             });
         });
-    </script>
+</script>
+    
 </body>
 </html>
