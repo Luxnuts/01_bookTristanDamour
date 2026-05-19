@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tristan Damour - Portfolio</title>
+    <style>
+        :root {
+            --bleu-principal: #9dbed3;
+            --texte-noir: #1a1a1a;
+            --transition-douce: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --gris-tres-clair: #fcfcfc;
+            --bordure: #eeeeee;
+            --overlay-couleur: rgba(26, 26, 26, 0.8);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: white;
+            color: var(--texte-noir);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION & BURGER --- */
+        .burger-trigger {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 30px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 5000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        @media (min-width: 1025px) { .burger-trigger { display: none; } }
+
+        .burger-trigger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: white;
+            transition: var(--transition-douce);
+            border-radius: 2px;
+        }
+
+        .burger-trigger.is-dark span { background: var(--texte-noir); }
+
+        .burger-active span:nth-child(1) { transform: translateY(9px) rotate(45deg); background: var(--texte-noir) !important; }
+        .burger-active span:nth-child(2) { opacity: 0; }
+        .burger-active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background: var(--texte-noir) !important; }
+
+        .full-menu {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 4500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(-100%);
+            transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+
+        .full-menu.active { transform: translateY(0); }
+        .full-menu ul { list-style: none; text-align: center; }
+        .full-menu li { margin: 25px 0; }
+        .full-menu a {
+            text-decoration: none;
+            color: var(--texte-noir);
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .navbar { position: fixed; top: 20px; left: 20px; z-index: 1000; }
+        .logo-link { display: block; width: 45px; transition: var(--transition-douce); }
+        .logo-svg { width: 100%; filter: brightness(0) invert(1); transition: var(--transition-douce); }
+        .logo-dark { filter: none; }
+        .logo-hidden-mobile { opacity: 0; visibility: hidden; transform: translateX(-20px); }
+
+        /* --- SECTIONS --- */
+        .section-hero {
+            background-color: var(--bleu-principal);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .section-white { min-height: 100vh; padding: 100px 8%; }
+        .section-title {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 50px;
+            color: var(--bleu-principal);
+        }
+
+        /* --- GRILLE MOSAÏQUE --- */
+        .project-mosaic {
+            columns: 3;
+            column-gap: 20px;
+            width: 100%;
+        }
+
+        .mosaic-item {
+            position: relative;
+            display: block;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border-radius: 2px;
+            text-decoration: none;
+            color: white;
+            break-inside: avoid;
+            background-color: var(--gris-tres-clair);
+            cursor: pointer;
+        }
+
+        .mosaic-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(0%);
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .mosaic-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: var(--overlay-couleur);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .mosaic-overlay h3 {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            transform: translateY(10px);
+            transition: transform 0.4s ease;
+        }
+
+        .mosaic-overlay p {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            transform: translateY(10px);
+            transition: transform 0.4s ease 0.1s;
+        }
+
+        .mosaic-item:hover img { filter: grayscale(100%); transform: scale(1.08); }
+        .mosaic-item:hover .mosaic-overlay { opacity: 1; }
+        .mosaic-item:hover h3, .mosaic-item:hover p { transform: translateY(0); }
+
+        /* --- STYLES MODALE & CARROUSEL --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 6000;
+            inset: 0;
+            background-color: rgba(0,0,0,0.9);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 1100px;
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 7000;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 65vh;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .carousel-slide img {
+            min-width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover { background: var(--bleu-principal); }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+
+        .modal-info { padding: 30px; text-align: center; }
+        .modal-info h3 { text-transform: uppercase; color: var(--bleu-principal); margin-bottom: 10px; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1100px) { .project-mosaic { columns: 2; } }
+        @media (max-width: 768px) {
+            .project-mosaic { columns: 1; }
+            .section-white { padding: 60px 20px; }
+            .carousel-container { height: 50vh; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="burger-trigger" id="burgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+
+    <nav class="full-menu" id="fullMenu">
+        <ul>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#a-propos">À Propos</a></li>
+            <li><a href="#projets">Projets</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="navbar" id="navBarContainer">
+        <a href="#accueil" class="logo-link" id="logoLink">
+            <img src="logo.svg" alt="Logo" class="logo-svg" id="mainLogo">
+        </a>
+    </header>
+
+    <section class="section-hero" id="accueil">
+        <img src="texte.svg" alt="Tristan Damour" style="max-width: 600px; width: 85%; filter: brightness(0) invert(1);">
+    </section>
+
+    <section class="section-white" id="a-propos">
+        <h2 class="section-title">À Propos</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, repellat iusto hic dolorum, eligendi totam consequuntur harum voluptatum delectus laudantium voluptates incidunt placeat doloremque eveniet exercitationem? Magnam tempore distinctio aspernatur?</p>
+    </section>
+
+    <section class="section-white" id="projets">
+        <h2 class="section-title">Art Works</h2>
+        <div class="project-mosaic">
+            <div class="mosaic-item" data-project="p1">
+                <img src="img/img_01.jpg" alt="Work 1">
+                <div class="mosaic-overlay"><h3>Projet 01</h3><p>Illustration & Concept</p></div>
+            </div>
+            <div class="mosaic-item" data-project="p2">
+                <img src="img/img_02.jpg" alt="Work 2">
+                <div class="mosaic-overlay"><h3>Projet 02</h3><p>Typographie</p></div>
+            </div>
+            <div class="mosaic-item" data-project="p3">
+                <img src="img/img_03.jpg" alt="Work 3">
+                <div class="mosaic-overlay"><h3>Projet 03</h3><p>Digital Art</p></div>
+            </div>
+            <div class="mosaic-item" data-project="p4">
+                <img src="img/img_04.jpg" alt="Work 4">
+                <div class="mosaic-overlay"><h3>Projet 04</h3><p>Minimalisme</p></div>
+            </div>
+            <div class="mosaic-item" data-project="p5">
+                <img src="img/img_05.jpg" alt="Work 5">
+                <div class="mosaic-overlay"><h3>Projet 05</h3><p>Branding</p></div>
+            </div>
+            <div class="mosaic-item" data-project="p6">
+                <img src="img/img_06.jpg" alt="Work 6">
+                <div class="mosaic-overlay"><h3>Projet 06</h3><p>Affiche</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODALE -->
+    <div id="projectModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <div class="modal-content">
+            <div class="carousel-container">
+                <div class="carousel-slide" id="carouselSlide"></div>
+                <button class="nav-btn prev-btn">&#10094;</button>
+                <button class="nav-btn next-btn">&#10095;</button>
+            </div>
+            <div class="modal-info">
+                <h3 id="modalTitle"></h3>
+                <p id="modalDesc"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DONNÉES CARROUSEL
+        const projectData = {
+            "p1": { title: "Projet 01", desc: "Description de l'illustration et du concept.", images: ["img/img_01.jpg", "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=1000"] },
+            "p2": { title: "Projet 02", desc: "Travail sur la typographie moderne.", images: ["https://images.unsplash.com/photo-1633167606207-d840b5070fc2?w=1000", "https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?w=1000"] },
+            "p3": { title: "Projet 03", desc: "Art numérique et compositions.", images: ["https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=1000"] },
+            "p4": { title: "Projet 04", desc: "Épure et minimalisme visuel.", images: ["https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1000"] },
+            "p5": { title: "Projet 05", desc: "Identité de marque et branding.", images: ["https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=1000"] },
+            "p6": { title: "Projet 06", desc: "Conception d'affiches événementielles.", images: ["https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1000"] }
+        };
+
+        const burgerBtn = document.getElementById('burgerBtn');
+        const fullMenu = document.getElementById('fullMenu');
+        const mainLogo = document.getElementById('mainLogo');
+        const logoLink = document.getElementById('logoLink');
+        const heroSection = document.getElementById('accueil');
+        const modal = document.getElementById('projectModal');
+        const slideContainer = document.getElementById('carouselSlide');
+        let currentIdx = 0;
+
+        // MENU BURGER
+        burgerBtn.addEventListener('click', () => {
+            const isActive = fullMenu.classList.toggle('active');
+            burgerBtn.classList.toggle('burger-active');
+            document.body.style.overflow = isActive ? 'hidden' : '';
+        });
+
+        // OUVERTURE MODALE
+        document.querySelectorAll('.mosaic-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const id = item.getAttribute('data-project');
+                const project = projectData[id];
+                if (!project) return;
+
+                currentIdx = 0;
+                document.getElementById('modalTitle').innerText = project.title;
+                document.getElementById('modalDesc').innerText = project.desc;
+                slideContainer.innerHTML = project.images.map(img => `<img src="${img}">`).join('');
+                
+                updateCarousel();
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // NAVIGATION CARROUSEL
+        function updateCarousel() {
+            slideContainer.style.transform = `translateX(${-currentIdx * 100}%)`;
+        }
+
+        document.querySelector('.next-btn').onclick = () => {
+            const total = slideContainer.querySelectorAll('img').length;
+            currentIdx = (currentIdx + 1) % total;
+            updateCarousel();
+        };
+
+        document.querySelector('.prev-btn').onclick = () => {
+            const total = slideContainer.querySelectorAll('img').length;
+            currentIdx = (currentIdx - 1 + total) % total;
+            updateCarousel();
+        };
+
+        // FERMETURE MODALE
+        document.querySelector('.modal-close').onclick = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        };
+
+        window.onclick = (e) => { if (e.target == modal) { modal.style.display = 'none'; document.body.style.overflow = ''; } };
+
+        // SCROLL EFFECTS
+        window.addEventListener('scroll', () => {
+            const heroBottom = heroSection.getBoundingClientRect().bottom;
+            if (heroBottom <= 60) {
+                burgerBtn.classList.add('is-dark');
+                if (window.innerWidth <= 768) logoLink.classList.add('logo-hidden-mobile');
+                else mainLogo.classList.add('logo-dark');
+            } else {
+                burgerBtn.classList.remove('is-dark');
+                mainLogo.classList.remove('logo-dark');
+                logoLink.classList.remove('logo-hidden-mobile');
+            }
+        });
+
+        document.querySelectorAll('.full-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                fullMenu.classList.remove('active');
+                burgerBtn.classList.remove('burger-active');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
+</body>
+</html>
