@@ -62,7 +62,7 @@ Ne cherche pas avec les numéros de ligne : ils changent dès que tu ajoutes que
 | Les cases de la mosaïque | `mosaic-item` |
 | Les fiches des projets (titre, texte, images) | `projectData` |
 | Le texte « À propos » | `Lorem` |
-| L'e-mail, le téléphone, le CV | `contact-block` |
+| L'e-mail et le CV | `contact-block` |
 | La couleur bleue | `--bleu-principal` |
 | Le gros titre de l'accueil | `hero-title` |
 | Le style **tablette** | `min-width: 601px` |
@@ -396,6 +396,7 @@ Sur la branche `corrections`, il y a des améliorations qui t'attendent :
 - menu qui se cache quand on descend et revient quand on remonte
 - CSS réécrit en **mobile first** (voir [Téléphone, tablette, ordinateur](#téléphone-tablette-ordinateur))
 - bouton d'accueil « Voir mes projets » au lieu de « Scroll to learn more »
+- numéro de téléphone retiré de la section Contact (il ne doit pas être public)
 
 **1. Regarder**
 En bas à gauche de VS Code, clique sur le nom de la branche → choisis `corrections` → ouvre le site et regarde.
@@ -414,9 +415,9 @@ Chaque correction a son numéro. Pour en annuler une seule après la fusion :
 ```
 git log --oneline
 ```
-Repère le numéro de la correction (par exemple `3888c6f` pour le menu), puis :
+Repère le numéro de la correction (par exemple `06c4b0c` pour le menu), puis :
 ```
-git revert 3888c6f
+git revert 06c4b0c
 ```
 Les autres corrections restent en place.
 
@@ -508,7 +509,6 @@ Coche au fur et à mesure. Une case par séance, c'est déjà très bien. 💪
 **Finitions**
 - [ ] Regarder les corrections de la branche `corrections` et les fusionner ([voir ici](#récupérer-les-corrections-de-la-branche--corrections-))
 - [ ] Choisir une seule langue : le titre « Art Works » est encore en anglais
-- [ ] Réfléchir : est-ce que je veux vraiment mon numéro de téléphone sur un site public ?
 - [ ] Supprimer les fichiers inutiles : `style.css`, `script.js`, `log5TY!.svg`
 - [ ] Créer le fichier `.gitignore` ([voir ici](#ce-quil-ne-faut-pas-mettre-sur-github))
 
