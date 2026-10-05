@@ -61,7 +61,7 @@ Ne cherche pas avec les numéros de ligne : ils changent dès que tu ajoutes que
 |---|---|
 | Les cases de la mosaïque | `mosaic-item` |
 | Les fiches des projets (titre, texte, images) | `projectData` |
-| Le texte « À propos » | `Lorem` |
+| Le texte « À propos » | `Élève motivé` |
 | L'e-mail et le CV | `contact-block` |
 | La couleur bleue | `--bleu-principal` |
 | Le gros titre de l'accueil | `hero-title` |
@@ -243,7 +243,7 @@ Chaque image entre guillemets, séparées par une **virgule**.
 
 ### E. Écrire le texte « À propos »
 
-1. `Ctrl + F` → tape `Lorem`.
+1. `Ctrl + F` → tape `Élève motivé` (le début du texte).
 2. Remplace le texte entre `<p>` et `</p>` par ta présentation.
 3. Pour faire un nouveau paragraphe, ajoute un autre `<p>…</p>` en dessous.
 
@@ -489,7 +489,7 @@ Tes modifications reviennent, rien n'est perdu.
 Coche au fur et à mesure. Une case par séance, c'est déjà très bien. 💪
 
 **Contenu**
-- [ ] Écrire le texte « À propos » (recette E)
+- [x] Écrire le texte « À propos » (recette E)
 - [ ] Ajouter `cv.pdf` (recette F)
 - [x] Logo du bas de page : le même que celui du menu (`img/logo.svg`)
 - [x] Remplir toutes les cases de la mosaïque
