@@ -53,6 +53,29 @@ Ne cherche pas avec les numéros de ligne : ils changent dès que tu ajoutes que
 | L'e-mail, le téléphone, le CV | `contact-block` |
 | La couleur bleue | `--bleu-principal` |
 | Le gros titre de l'accueil | `hero-title` |
+| Le style **tablette** | `min-width: 601px` |
+| La grille 7 colonnes (**ordinateur**) | `min-width: 901px` |
+| Le menu et les fiches projet (**ordinateur**) | `min-width: 1025px` |
+
+---
+
+## Téléphone, tablette, ordinateur
+
+Le style est écrit **« mobile first »** : on écrit d'abord la version **téléphone**, puis on ajoute ce qui change pour les écrans plus grands.
+
+- **Le haut du `<style>`** = la version **téléphone**.
+- **Tout en bas du `<style>`**, trois blocs ajoutent des changements :
+
+| Bloc | S'applique à partir de… | Exemple |
+|---|---|---|
+| `@media (min-width: 601px)` | tablette | grille sur 3 colonnes |
+| `@media (min-width: 901px)` | grande tablette, petit ordi | grille sur 7 colonnes |
+| `@media (min-width: 1025px)` | ordinateur | menu en haut, plus de burger ☰ |
+
+👉 Je veux changer un truc **partout** : je modifie en haut.
+👉 Je veux changer un truc **seulement sur ordinateur** : je modifie dans le bon bloc en bas.
+
+Pour tester la version téléphone sur l'ordinateur : dans le navigateur, `F12`, puis l'icône 📱 (ou `Ctrl + Maj + M`).
 
 ---
 

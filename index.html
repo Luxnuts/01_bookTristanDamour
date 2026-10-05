@@ -10,6 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@600;900&family=Schibsted+Grotesk:wght@900&display=swap" rel="stylesheet">
     
     <style>
+        /* =========================================================
+           CSS ÉCRIT EN « MOBILE FIRST »
+           1. Tout le haut du fichier = la version TÉLÉPHONE.
+           2. Tout en bas, les blocs @media (min-width: ...) ajoutent
+              les changements pour les écrans plus grands :
+              - à partir de 601px  : tablette
+              - à partir de 901px  : grande tablette / petit ordi (grille 7 colonnes)
+              - à partir de 1025px : ordinateur (menu complet en haut)
+           ========================================================= */
+
         :root {
             --bleu-principal: #6aa6d9;
             --texte-noir: #1a1a1a;
@@ -40,14 +50,12 @@
         }
 
         /* --- NAVIGATION FIXE --- */
-        .navbar { 
-            position: fixed; 
-            top: 0; 
-            left: 50%;
-            transform: translateX(-50%);
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: var(--max-largeur-grille);
-            padding: 30px 24px; 
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -73,7 +81,7 @@
         .navbar.nav-solid::before { opacity: 1; }
 
         /* Menu caché quand on descend, il revient quand on remonte */
-        .navbar.nav-hidden { transform: translate(-50%, -100%); }
+        .navbar.nav-hidden { transform: translateY(-100%); }
 
         .logo-link { display: block; width: 45px; transition: var(--transition-douce); }
         .logo-svg { width: 100%; filter: brightness(0) invert(1); transition: var(--transition-douce); }
@@ -82,7 +90,8 @@
         /* Sur mobile, le logo blanc disparaît une fois sorti de l'accueil bleu */
         .logo-hidden-mobile { opacity: 0; visibility: hidden; }
 
-        .desktop-nav { display: flex; gap: 30px; }
+        /* Menu en ligne : caché sur téléphone, affiché sur ordinateur (voir en bas) */
+        .desktop-nav { display: none; gap: 30px; }
         .desktop-nav a {
             color: white;
             text-decoration: none;
@@ -104,7 +113,7 @@
             border: none;
             cursor: pointer;
             z-index: 5000;
-            display: none;
+            display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
@@ -178,7 +187,7 @@
             flex-direction: column;
             align-items: flex-start;
             color: white;
-            padding: 0 24px;
+            padding: 0 20px;
             z-index: 2;
         }
 
@@ -201,7 +210,7 @@
             bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 48px);
+            width: calc(100% - 40px);
             max-width: var(--max-largeur-grille);
             z-index: 3;
             background: none;
@@ -246,15 +255,15 @@
 
         /* --- SECTIONS STANDARDS --- */
         .section-white { 
-            min-height: 100vh; 
-            padding: 100px 0; 
-            position: relative; 
+            min-height: 100vh;
+            padding: 60px 0;
+            position: relative;
         }
-        
+
         .section-container {
             max-width: var(--max-largeur-grille);
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
             width: 100%;
         }
 
@@ -266,11 +275,12 @@
             color: var(--bleu-principal);
         }
 
-        /* --- GRILLE STRICTE 7 COLONNES (Basée sur Capture d’écran 2026-06-09 à 11.17.19.png) --- */
+        /* --- GRILLE DES PROJETS --- */
+        /* Téléphone : une seule colonne, les cases les unes sous les autres.
+           Tablette (3 colonnes) et ordinateur (7 colonnes) : voir en bas. */
         .project-grid-wrapper {
             display: grid;
-            grid-template-columns: repeat(7, 1fr); /* 7 colonnes parfaites comme sur ton dessin */
-            grid-auto-rows: 150px; /* Ajuste la hauteur de ligne pour garder les bonnes proportions */
+            grid-template-columns: 1fr;
             gap: 24px;
             width: 100%;
         }
@@ -282,29 +292,13 @@
             overflow: hidden;
             background-size: cover;
             background-position: center;
-            background-color: #f0f0f0; 
-            border-radius: 45px; /* Arrondis de ta maquette */
+            background-color: #f0f0f0;
+            border-radius: 25px;
+            height: 260px;
             cursor: pointer;
             text-decoration: none;
             color: white;
         }
-
-        /* POSITIONNEMENT EXACT COLONNE PAR COLONNE POUR CORRESPONDRE AU DESSIN */
-        .box-boite-bleue { grid-column: 1; grid-row: 1 / span 2; }
-        .box-smoothie     { grid-column: 1; grid-row: 3 / span 2; }
-        
-        .box-rouge-haut1  { grid-column: 2 / span 1; grid-row: 1; }
-        .box-grand-rouge  { grid-column: 2 / span 4; grid-row: 2 / span 2; }
-        .box-rouge-bas1   { grid-column: 2 / span 2; grid-row: 4; }
-        
-        .box-cafe         { grid-column: 3 / span 2; grid-row: 1; }
-        
-        .box-rouge-haut2  { grid-column: 5; grid-row: 1; }
-        .box-rouge-bas2   { grid-column: 4 / span 1; grid-row: 4; }
-        .box-rouge-bas3   { grid-column: 5; grid-row: 4; }
-        
-        .box-carnaval     { grid-column: 6 / span 2; grid-row: 1 / span 2; }
-        .box-heros        { grid-column: 6 / span 2; grid-row: 3 / span 2; }
 
         /* Formats alternatifs spécifiques */
         .item-circle { border-radius: 50%; } /* Cercle parfait pour le petit bouton isolé */
@@ -377,8 +371,8 @@
 
         .contact-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px 24px;
+            grid-template-columns: 1fr;
+            gap: 40px;
             width: 100%;
             margin-top: 20px;
         }
@@ -414,8 +408,9 @@
         }
 
         .contact-logo {
-            width: 318px;  
-            height: 193px; 
+            width: 100%;
+            max-width: 318px;
+            height: auto;
             object-fit: contain;
             display: block;
             opacity: 0.9;
@@ -431,7 +426,7 @@
             position: fixed;
             z-index: 6000;
             inset: 0;
-            background-color: rgba(255, 255, 255, 0.98);
+            background-color: white;
             backdrop-filter: blur(10px);
             justify-content: center;
             align-items: flex-start;
@@ -443,8 +438,8 @@
             width: 100%;
             max-width: var(--max-largeur-grille);
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 50px;
+            grid-template-columns: 1fr;
+            gap: 35px;
             align-items: start;
             margin: 0 auto;
         }
@@ -461,15 +456,10 @@
         }
         .modal-close:hover { transform: scale(1.2); }
 
-        .modal-left-col {
-            position: sticky;
-            top: 40px;
-        }
-
         .modal-main-img {
             width: 100%;
             height: auto;
-            max-height: 75vh;
+            max-height: 50vh;
             object-fit: contain;
             border-radius: 4px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -515,43 +505,78 @@
             white-space: pre-line;
         }
 
-        /* --- RESPONSIVE --- */
-        @media (max-width: 1024px) {
-            .desktop-nav { display: none !important; }
-            .burger-trigger { display: flex !important; }
-            .navbar { padding: 20px; left: 0; transform: none; max-width: 100%; }
-            .navbar.nav-hidden { transform: translateY(-100%); }
-            
-            .modal-grid { grid-template-columns: 1fr; gap: 35px; }
-            .modal-left-col { position: static; }
-            .modal-main-img { max-height: 50vh; }
-        }
-        
-        @media (max-width: 900px) {
-            /* On passe à 3 colonnes sur tablette pour garder de la lisibilité sans tout casser */
-            .project-grid-wrapper { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 140px; }
-            .box-boite-bleue, .box-smoothie, .box-rouge-haut1, .box-grand-rouge, .box-rouge-bas1,
-            .box-cafe, .box-rouge-haut2, .box-rouge-bas2, .box-rouge-bas3, .box-carnaval, .box-heros {
-                grid-column: auto / span 1 !important;
-                grid-row: auto / span 1 !important;
+        /* =========================================================
+           TABLETTE : à partir de 601px de large
+           ========================================================= */
+        @media (min-width: 601px) {
+            .section-white { padding: 100px 0; }
+            .section-container { padding: 0 24px; }
+            .hero-container { padding: 0 24px; }
+            .scroll-indicator { width: calc(100% - 48px); }
+            .modal { background-color: rgba(255, 255, 255, 0.98); }
+
+            /* Grille sur 3 colonnes */
+            .project-grid-wrapper {
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: 140px;
+                grid-auto-flow: dense; /* bouche les trous de la mosaïque */
             }
-            .box-grand-rouge { grid-column: auto / span 2 !important; grid-row: auto / span 2 !important; }
-            .box-boite-bleue, .box-smoothie, .box-carnaval, .box-heros { grid-row: auto / span 2 !important; }
+            .mosaic-item { height: auto; border-radius: 45px; /* Arrondis de ta maquette */ }
+            .box-grand-rouge { grid-column: span 2; grid-row: span 2; }
+            .box-boite-bleue, .box-smoothie, .box-carnaval, .box-heros { grid-row: span 2; }
+
+            .contact-grid { grid-template-columns: 1fr 1fr; gap: 50px 24px; }
+            .contact-logo { width: 318px; height: 193px; }
         }
 
-        @media (max-width: 600px) {
-            /* Forçage complet en une seule colonne sur mobile */
-            .project-grid-wrapper { grid-template-columns: 1fr; grid-auto-rows: auto; }
-            .mosaic-item { grid-column: auto !important; grid-row: auto !important; height: 260px; border-radius: 25px; }
-            
-            .section-white { padding: 60px 0; }
-            .section-container { padding: 0 20px; }
-            .hero-container { padding: 0 20px; }
-            .scroll-indicator { width: calc(100% - 40px); }
-            .modal { background-color: white; padding-top: 80px; }
-            .hero-bg-motif { height: 100%; }
-            .contact-grid { grid-template-columns: 1fr; gap: 40px; }
-            .contact-logo { width: 100%; height: auto; max-width: 318px; }
+        /* =========================================================
+           GRANDE TABLETTE / ORDINATEUR : à partir de 901px de large
+           Grille stricte 7 colonnes, comme sur la maquette
+           ========================================================= */
+        @media (min-width: 901px) {
+            .project-grid-wrapper {
+                grid-template-columns: repeat(7, 1fr); /* 7 colonnes parfaites comme sur ton dessin */
+                grid-auto-rows: 150px; /* Ajuste la hauteur de ligne pour garder les bonnes proportions */
+                grid-auto-flow: row;
+            }
+
+            /* POSITIONNEMENT EXACT COLONNE PAR COLONNE POUR CORRESPONDRE AU DESSIN */
+            .box-boite-bleue { grid-column: 1; grid-row: 1 / span 2; }
+            .box-smoothie     { grid-column: 1; grid-row: 3 / span 2; }
+
+            .box-rouge-haut1  { grid-column: 2 / span 1; grid-row: 1; }
+            .box-grand-rouge  { grid-column: 2 / span 4; grid-row: 2 / span 2; }
+            .box-rouge-bas1   { grid-column: 2 / span 2; grid-row: 4; }
+
+            .box-cafe         { grid-column: 3 / span 2; grid-row: 1; }
+
+            .box-rouge-haut2  { grid-column: 5; grid-row: 1; }
+            .box-rouge-bas2   { grid-column: 4 / span 1; grid-row: 4; }
+            .box-rouge-bas3   { grid-column: 5; grid-row: 4; }
+
+            .box-carnaval     { grid-column: 6 / span 2; grid-row: 1 / span 2; }
+            .box-heros        { grid-column: 6 / span 2; grid-row: 3 / span 2; }
+        }
+
+        /* =========================================================
+           ORDINATEUR : à partir de 1025px de large
+           ========================================================= */
+        @media (min-width: 1025px) {
+            /* Menu complet en haut, centré sur la grille ; plus de burger */
+            .navbar {
+                left: 50%;
+                transform: translateX(-50%);
+                max-width: var(--max-largeur-grille);
+                padding: 30px 24px;
+            }
+            .navbar.nav-hidden { transform: translate(-50%, -100%); }
+            .desktop-nav { display: flex; }
+            .burger-trigger { display: none; }
+
+            /* Fiche projet sur 2 colonnes : image à gauche, texte à droite */
+            .modal-grid { grid-template-columns: 1.2fr 1fr; gap: 50px; }
+            .modal-left-col { position: sticky; top: 40px; }
+            .modal-main-img { max-height: 75vh; }
         }
     </style>
 </head>
