@@ -51,9 +51,30 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 4000; 
+            z-index: 4000;
+            transition: transform var(--transition-douce);
         }
-        
+
+        /* Fond blanc pleine largeur, affiché seulement quand on a quitté l'accueil */
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 100vw;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        .navbar.nav-solid::before { opacity: 1; }
+
+        /* Menu caché quand on descend, il revient quand on remonte */
+        .navbar.nav-hidden { transform: translate(-50%, -100%); }
+
         .logo-link { display: block; width: 45px; transition: var(--transition-douce); }
         .logo-svg { width: 100%; filter: brightness(0) invert(1); transition: var(--transition-douce); }
         .logo-dark { filter: none; }
@@ -499,6 +520,7 @@
             .desktop-nav { display: none !important; }
             .burger-trigger { display: flex !important; }
             .navbar { padding: 20px; left: 0; transform: none; max-width: 100%; }
+            .navbar.nav-hidden { transform: translateY(-100%); }
             
             .modal-grid { grid-template-columns: 1fr; gap: 35px; }
             .modal-left-col { position: static; }
@@ -796,10 +818,22 @@
         modal.onclick = (e) => { if (e.target == modal) closeModal(); };
         window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
+        const navBar = document.getElementById('navBarContainer');
+        let lastScrollY = window.scrollY;
+
         window.addEventListener('scroll', () => {
             const heroBottom = heroSection.getBoundingClientRect().bottom;
             const contactTop = contactSection.getBoundingClientRect().top;
-            
+
+            // Menu : caché quand on descend, visible (avec fond blanc) quand on remonte
+            const scrollY = window.scrollY;
+            const pastHero = heroBottom <= 60;
+            navBar.classList.toggle('nav-solid', pastHero);
+            if (Math.abs(scrollY - lastScrollY) > 5) { // ignore les tout petits mouvements
+                navBar.classList.toggle('nav-hidden', pastHero && scrollY > lastScrollY);
+                lastScrollY = scrollY;
+            }
+
             if (contactTop <= 80) {
                 logoLink.classList.add('logo-hidden-completely');
             } else {
