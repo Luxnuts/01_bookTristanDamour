@@ -491,7 +491,7 @@ Coche au fur et à mesure. Une case par séance, c'est déjà très bien. 💪
 **Contenu**
 - [ ] Écrire le texte « À propos » (recette E)
 - [ ] Ajouter `cv.pdf` (recette F)
-- [ ] Ajouter le logo du bas de page : `img/LOGO-TRISTAN-04-2.png` (il manque)
+- [x] Logo du bas de page (`img/logo-tristan.svg`)
 - [x] Remplir toutes les cases de la mosaïque
 - [ ] Relire et **réécrire avec mes mots** la description de chaque projet (recette B), surtout : Oral-B, les coverings, Animations, Oasis × Nike, Solid Rénovation
 - [ ] Dire ce que j'ai fait dans chaque projet : la demande, mes choix, les logiciels
@@ -503,7 +503,7 @@ Coche au fur et à mesure. Une case par séance, c'est déjà très bien. 💪
 
 **Finitions**
 - [ ] Regarder les corrections de la branche `corrections` et les fusionner ([voir ici](#récupérer-les-corrections-de-la-branche--corrections-))
-- [ ] Supprimer les fichiers inutiles : `style.css`, `script.js`, `log5TY!.svg`
+- [ ] Supprimer les fichiers inutiles : `style.css`, `script.js`
 - [ ] Créer le fichier `.gitignore` ([voir ici](#ce-quil-ne-faut-pas-mettre-sur-github))
 
 **Mise en ligne**
