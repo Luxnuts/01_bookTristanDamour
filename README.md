@@ -9,8 +9,11 @@
 ## Sommaire
 
 - [Le dossier en un coup d'œil](#le-dossier-en-un-coup-dœil)
+- [Trouver un endroit dans le code](#trouver-un-endroit-dans-le-code)
+- [Téléphone, tablette, ordinateur](#téléphone-tablette-ordinateur)
 - [Avant de modifier : sauvegarder](#avant-de-modifier--sauvegarder)
 - [Voir le résultat](#voir-le-résultat)
+- [La carte de la mosaïque](#la-carte-de-la-mosaïque)
 - **Recettes**
   - [A. Changer l'image d'une case](#a-changer-limage-dune-case)
   - [B. Changer le titre ou le texte d'un projet](#b-changer-le-titre-ou-le-texte-dun-projet)
@@ -21,7 +24,16 @@
   - [G. Changer la couleur bleue](#g-changer-la-couleur-bleue)
 - [Les règles pour les images](#les-règles-pour-les-images)
 - [J'ai cassé quelque chose](#jai-cassé-quelque-chose)
+- **GitHub**
+  - [Comment ça marche (en 1 minute)](#comment-ça-marche-en-1-minute)
+  - [Ma routine à chaque séance](#ma-routine-à-chaque-séance)
+  - [Les branches](#les-branches)
+  - [Récupérer les corrections de la branche « corrections »](#récupérer-les-corrections-de-la-branche--corrections-)
+  - [Mettre le site en ligne (GitHub Pages)](#mettre-le-site-en-ligne-github-pages)
+  - [Ce qu'il ne faut pas mettre sur GitHub](#ce-quil-ne-faut-pas-mettre-sur-github)
+  - [Problèmes fréquents avec GitHub](#problèmes-fréquents-avec-github)
 - [Ma liste de choses à faire](#ma-liste-de-choses-à-faire)
+- [Petit lexique](#petit-lexique)
 
 ---
 
@@ -295,6 +307,183 @@ Contrôle de code source → clic droit sur `index.html` → **Ignorer les modif
 
 ---
 
+## GitHub
+
+### Comment ça marche (en 1 minute)
+
+Il y a **deux endroits** où vit ton site :
+
+```
+   TON ORDINATEUR                         GITHUB (sur internet)
+  ┌──────────────────┐                   ┌──────────────────┐
+  │                  │  ── Envoyer ──▶   │                  │
+  │  ton dossier     │     (push)        │  ton dépôt       │
+  │  + l'historique  │                   │  (copie en ligne)│
+  │                  │  ◀── Récupérer ── │                  │
+  └──────────────────┘     (pull)        └──────────────────┘
+```
+
+Trois actions à connaître, c'est tout :
+
+| Action | En anglais | Ce que ça fait | Où ? |
+|---|---|---|---|
+| **Valider** | *commit* | Prend une « photo » de ton travail, **sur ton ordi** | Ordi seulement |
+| **Envoyer** | *push* | Envoie tes photos **sur GitHub** | Ordi → GitHub |
+| **Récupérer** | *pull* | Ramène sur ton ordi ce qui a changé sur GitHub | GitHub → Ordi |
+
+> 💡 **Valider ne suffit pas !** Tant que tu n'as pas **envoyé**, ton travail n'est **que sur ton ordi**.
+> Si ton ordi tombe en panne, il est perdu.
+
+Dans VS Code, le bouton **Synchroniser les modifications** (*Sync Changes*) fait **Récupérer + Envoyer** d'un seul clic.
+
+---
+
+### Ma routine à chaque séance
+
+Toujours dans le même ordre. Tu peux garder cette liste ouverte à côté.
+
+**En arrivant**
+- [ ] Ouvre le dossier dans VS Code
+- [ ] **Contrôle de code source** (l'icône avec trois ronds reliés) → **Synchroniser** (ou `…` → **Tirer** / *Pull*)
+
+**Pendant**
+- [ ] Une modification → j'enregistre (`Ctrl + S`) → je regarde le résultat
+- [ ] Quand un petit morceau marche : **Valider** avec un message clair
+
+**En partant**
+- [ ] **Valider** ce qui reste
+- [ ] **Synchroniser** pour tout envoyer sur GitHub
+- [ ] Vérifier sur github.com que ton dernier message apparaît
+
+**Écrire un bon message de commit** : dis **ce que tu as fait**, en quelques mots.
+
+| ✅ Bon message | ❌ Message inutile |
+|---|---|
+| `ajoute le projet carnaval` | `modif` |
+| `écrit le texte à propos` | `test` |
+| `remplace l'image nespresso` | `aaaa` |
+
+Dans 3 mois, tu seras content de retrouver facilement le bon moment dans l'historique.
+
+---
+
+### Les branches
+
+Une **branche**, c'est une **copie de travail** du site. On peut tester des choses dessus sans abîmer la version principale.
+
+Tu vois sur quelle branche tu es **en bas à gauche** de VS Code. Clique dessus pour changer de branche.
+
+| Branche | À quoi elle sert |
+|---|---|
+| `main` | La version **officielle**, celle qui sera en ligne |
+| `test` | Ta version de travail actuelle |
+| `corrections` | Des corrections proposées, **en attente de ton avis** |
+| `master` | Une ancienne branche, tu peux l'ignorer |
+
+> ⚠️ Avant de changer de branche, **valide** ton travail en cours.
+> Sinon VS Code refuse, ou tes modifications te suivent sur l'autre branche.
+
+---
+
+### Récupérer les corrections de la branche « corrections »
+
+Sur la branche `corrections`, il y a des améliorations qui t'attendent :
+
+- titres des projets visibles sur téléphone
+- plus d'image cassée dans les fiches projet
+- logo corrigé sur mobile
+- menu dans l'ordre de la page
+- menu qui se cache quand on descend et revient quand on remonte
+- CSS réécrit en **mobile first** (voir [Téléphone, tablette, ordinateur](#téléphone-tablette-ordinateur))
+- bouton d'accueil « Voir mes projets » au lieu de « Scroll to learn more »
+
+**1. Regarder**
+En bas à gauche de VS Code, clique sur le nom de la branche → choisis `corrections` → ouvre le site et regarde.
+Puis reviens sur `test` pour comparer.
+
+**2. Si ça te plaît : fusionner**
+1. Va sur la branche `test`.
+2. Dans le terminal de VS Code (`Ctrl + ù`), tape :
+   ```
+   git merge corrections
+   ```
+3. C'est fait : `test` contient maintenant tes travaux **et** les corrections.
+
+**3. Si une correction ne te plaît pas**
+Chaque correction a son numéro. Pour en annuler une seule après la fusion :
+```
+git log --oneline
+```
+Repère le numéro de la correction (par exemple `3888c6f` pour le menu), puis :
+```
+git revert 3888c6f
+```
+Les autres corrections restent en place.
+
+**4. Quand tout est bon sur `test` : mettre à jour `main`**
+```
+git switch main
+git merge test
+git push
+```
+
+---
+
+### Mettre le site en ligne (GitHub Pages)
+
+GitHub peut héberger ton site **gratuitement**. À faire **une seule fois** :
+
+1. Va sur ton dépôt, sur **github.com**.
+2. **Settings** (Paramètres) → dans le menu de gauche, **Pages**.
+3. Dans **Branch**, choisis `main` et le dossier `/ (root)` → **Save**.
+4. Attends 1 ou 2 minutes, puis recharge la page : l'adresse de ton site s'affiche en haut.
+
+Ensuite, **chaque fois que tu envoies sur `main`**, le site en ligne se met à jour tout seul (compte quelques minutes).
+
+> 💡 Si le site en ligne ne change pas : `Ctrl + F5` pour vider le cache du navigateur.
+
+---
+
+### Ce qu'il ne faut pas mettre sur GitHub
+
+Un dépôt public, **tout le monde peut le lire**. Et ce qui a été envoyé **reste dans l'historique**, même si tu le supprimes après.
+
+- ❌ Ton **numéro de téléphone**, ton **adresse**
+- ❌ Des **mots de passe**
+- ❌ Des fichiers énormes (vidéos, fichiers `.psd` ou `.ai` de travail) : garde-les ailleurs
+- ❌ `.DS_Store` (fichier caché créé par les Mac, inutile)
+
+Pour que Git **ignore** `.DS_Store` pour toujours : crée un fichier nommé `.gitignore` à côté de `index.html`, avec dedans :
+```
+.DS_Store
+```
+
+---
+
+### Problèmes fréquents avec GitHub
+
+**« Envoyer » est refusé (*rejected*, *push failed*)**
+→ Quelqu'un (ou toi depuis un autre ordi) a envoyé des choses avant toi.
+Fais d'abord **Récupérer** (*Pull*), puis **Envoyer** à nouveau.
+
+**VS Code parle de « conflit » (*merge conflict*)**
+→ Le même endroit d'un fichier a été modifié de deux façons différentes.
+VS Code te montre les deux versions en couleur, avec des boutons au-dessus :
+- **Accepter la modification actuelle** = garder **ta** version
+- **Accepter la modification entrante** = garder **l'autre** version
+- **Accepter les deux** = garder les deux
+
+Choisis, enregistre, puis **Valider**. Si tu as un doute : demande de l'aide **avant** de valider.
+
+**VS Code demande de se connecter à GitHub**
+→ C'est normal la première fois. Clique sur **Autoriser** et connecte-toi avec ton compte GitHub dans le navigateur.
+
+**J'ai validé quelque chose par erreur (mais pas encore envoyé)**
+→ Contrôle de code source → `…` → **Validation** → **Annuler la dernière validation** (*Undo Last Commit*).
+Tes modifications reviennent, rien n'est perdu.
+
+---
+
 ## Ma liste de choses à faire
 
 Coche au fur et à mesure. Une case par séance, c'est déjà très bien. 💪
@@ -317,8 +506,16 @@ Coche au fur et à mesure. Une case par séance, c'est déjà très bien. 💪
 - [ ] `boite 3.tif` (à exporter en `.jpg`)
 
 **Finitions**
-- [ ] Choisir une seule langue : « Scroll to learn more » et « Art Works » sont en anglais
+- [ ] Regarder les corrections de la branche `corrections` et les fusionner ([voir ici](#récupérer-les-corrections-de-la-branche--corrections-))
+- [ ] Choisir une seule langue : le titre « Art Works » est encore en anglais
 - [ ] Réfléchir : est-ce que je veux vraiment mon numéro de téléphone sur un site public ?
+- [ ] Supprimer les fichiers inutiles : `style.css`, `script.js`, `log5TY!.svg`
+- [ ] Créer le fichier `.gitignore` ([voir ici](#ce-quil-ne-faut-pas-mettre-sur-github))
+
+**Mise en ligne**
+- [ ] Mettre à jour `main` avec la bonne version
+- [ ] Activer GitHub Pages ([voir ici](#mettre-le-site-en-ligne-github-pages))
+- [ ] Ouvrir le site en ligne sur mon téléphone pour vérifier
 
 ---
 
@@ -330,4 +527,12 @@ Coche au fur et à mesure. Une case par séance, c'est déjà très bien. 💪
 | **CSS** | Le style : couleurs, tailles, positions (dans `<style>`, en haut du fichier) |
 | **JS** (JavaScript) | Ce qui bouge : le menu, les fiches projet qui s'ouvrent (dans `<script>`, en bas du fichier) |
 | **Balise** | Un mot entre `< >`, comme `<p>` ou `<h3>`. Elle s'ouvre `<p>` et se ferme `</p>` |
-| **Commit** | Une sauvegarde dans l'historique, pour pouvoir revenir en arrière |
+| **Git** | Le logiciel qui garde l'historique de ton site, sur ton ordi |
+| **GitHub** | Le site internet qui garde une copie en ligne de ton dépôt |
+| **Dépôt** (*repository*, *repo*) | Ton projet + tout son historique |
+| **Commit** (Valider) | Une sauvegarde dans l'historique, pour pouvoir revenir en arrière |
+| **Push** (Envoyer) | Envoyer tes commits sur GitHub |
+| **Pull** (Récupérer, Tirer) | Ramener sur ton ordi ce qui a changé sur GitHub |
+| **Branche** | Une copie de travail du site, pour tester sans abîmer la version principale |
+| **Merge** (Fusionner) | Réunir le travail d'une branche dans une autre |
+| **GitHub Pages** | Le service gratuit de GitHub qui met ton site en ligne |
