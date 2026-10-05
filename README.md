@@ -17,7 +17,7 @@
 - **Recettes**
   - [A. Changer l'image d'une case](#a-changer-limage-dune-case)
   - [B. Changer le titre ou le texte d'un projet](#b-changer-le-titre-ou-le-texte-dun-projet)
-  - [C. Remplir une case rouge](#c-remplir-une-case-rouge)
+  - [C. Remplacer un projet par un nouveau](#c-remplacer-un-projet-par-un-nouveau)
   - [D. Ajouter des images de détail dans un projet](#d-ajouter-des-images-de-détail-dans-un-projet)
   - [E. Écrire le texte « À propos »](#e-écrire-le-texte--à-propos-)
   - [F. Mettre ton CV](#f-mettre-ton-cv)
@@ -122,18 +122,20 @@ Après une modification : enregistre, puis appuie sur `Ctrl + F5` dans le naviga
 Chaque case a un **nom de projet** (`p1`, `p2`…). Voici où elles sont :
 
 ```
-┌─────────┬──────┬──────────────┬──────┬──────────────┐
-│         │  p4  │  p2 Nespresso│  p5  │              │
-│  p1     ├──────┴──────────────┴──────┤  p8 Carnaval │
-│  Boîte  │                            │              │
-├─────────┤   p7  (grand rectangle)    ├──────────────┤
-│         │                            │              │
-│  p3     ├─────────────┬──────┬───────┤  p11 Héros   │
-│ Smoothie│     p9      │  p10 │ p6 (○)│              │
-└─────────┴─────────────┴──────┴───────┴──────────────┘
+┌─────────┬────────┬──────────────┬────────┬──────────────┐
+│         │  p4    │  p2          │  p5    │              │
+│  p1     │ Roméo  │  Nespresso   │ Odile  │  p8 Carnaval │
+│ Étui    ├────────┴──────────────┴────────┤              │
+│ AirPods │                                ├──────────────┤
+├─────────┤   p7  Oasis × Nike             │              │
+│         │       (grand rectangle)        │  p11 Héros   │
+│  p3     ├─────────────────┬────────┬─────┤              │
+│ Oral-B  │  p9 Solid       │  p10   │ p6 ○│              │
+│         │  Rénovation     │ Cindy  │Anim.│              │
+└─────────┴─────────────────┴────────┴─────┴──────────────┘
 ```
 
-Les cases **p4, p5, p6, p7, p9, p10** sont encore **rouges** (vides).
+Toutes les cases sont remplies. Pour mettre un nouveau projet à la place d'un ancien : [recette C](#c-remplacer-un-projet-par-un-nouveau).
 
 > ⚠️ Ne change pas les mots qui commencent par `box-` (par exemple `box-cafe`).
 > Ce sont eux qui placent la case au bon endroit dans la grille.
@@ -149,8 +151,8 @@ Les cases **p4, p5, p6, p7, p9, p10** sont encore **rouges** (vides).
 3. Sur cette ligne, remplace seulement le nom de l'image :
 
 ```html
-style="background-image: url('img/img_02.jpg');"
-                                  ^^^^^^^^^^
+style="background-image: url('img/nespresso-maya.jpg');"
+                                  ^^^^^^^^^^^^^^^^^^
                                   ici
 ```
 
@@ -167,9 +169,9 @@ style="background-image: url('img/img_02.jpg');"
 ```js
 "p2": {
     title: "Nespresso Concept",
-    mainImage: "img/img_02.jpg",
+    mainImage: "img/nespresso-maya.jpg",
     desc: "Création et packaging graphique autour de la marque de café Nespresso.",
-    imagesBelow: []
+    imagesBelow: ["img/nespresso-bandeau.jpg"]
 },
 ```
 
@@ -184,36 +186,29 @@ Le petit texte qui apparaît **au survol** de la case est ailleurs :
 
 ---
 
-### C. Remplir une case rouge
+### C. Remplacer un projet par un nouveau
 
-Une case rouge se remplit en **deux étapes** : la case, puis la fiche.
+Un projet se change en **deux étapes** : la case, puis la fiche.
+Exemple : mettre un nouveau projet à la place de **p4** (Roméo).
 
 **Étape 1 — la case**
 
-1. `Ctrl + F` → tape le nom de la case, par exemple `data-project="p4"`.
+1. `Ctrl + F` → tape `data-project="p4"`.
 2. Tu trouves ça :
 
 ```html
-<div class="mosaic-item red-placeholder box-rouge-haut1" data-project="p4">
-    <div class="mosaic-overlay"><h3>Bientôt</h3><p>Projet à venir</p></div>
+<div class="mosaic-item box-rouge-haut1" data-project="p4" style="background-image: url('img/covering-kangoo-romeo.jpg');">
+    <div class="mosaic-overlay"><h3>Roméo</h3><p>Covering</p></div>
 </div>
 ```
 
-3. Remplace **tout le bloc** par ce modèle, puis change les mots en MAJUSCULES :
-
-```html
-<div class="mosaic-item box-rouge-haut1" data-project="p4" style="background-image: url('img/NOM-IMAGE.jpg');">
-    <div class="mosaic-overlay"><h3>TITRE</h3><p>SOUS-TITRE</p></div>
-</div>
-```
-
-Ce qui a changé : `red-placeholder` est **supprimé**, et on a **ajouté** le `style="background-image…"`.
-Garde bien le mot `box-…` d'origine (ici `box-rouge-haut1`).
+3. Change seulement **3 choses** : le nom de l'image, le titre `<h3>` et le sous-titre `<p>`.
+   Garde bien le mot `box-…` (ici `box-rouge-haut1`) : c'est lui qui place la case.
 
 **Étape 2 — la fiche**
 
-1. `Ctrl + F` → tape `projectData`.
-2. Juste **avant** la ligne `"p11": {`, colle ce modèle et change les MAJUSCULES :
+1. `Ctrl + F` → tape `"p4": {`.
+2. Change le titre, l'image et la description :
 
 ```js
 "p4": {
@@ -228,6 +223,9 @@ Garde bien le mot `box-…` d'origine (ici `box-rouge-haut1`).
 > Si la virgule manque, plus aucun projet ne s'ouvre.
 
 3. Enregistre, regarde, clique sur la case pour vérifier que la fiche s'ouvre.
+
+> 💡 **Choisir la bonne case selon l'image :**
+> image **verticale** → p1 ou p3 · image **horizontale** → p2, p7 ou p9 · image **carrée** → p8 ou p11 · petite image → p4, p5, p10 ou le rond p6.
 
 ---
 
@@ -493,19 +491,15 @@ Coche au fur et à mesure. Une case par séance, c'est déjà très bien. 💪
 **Contenu**
 - [ ] Écrire le texte « À propos » (recette E)
 - [ ] Ajouter `cv.pdf` (recette F)
-- [ ] Ajouter les images manquantes : `carnaval.jpg`, `heros.jpg`, `LOGO-TRISTAN-04-2.png`
-- [ ] Ajouter les images de détail manquantes : `img_01_zoom.jpg`, `img_01_croquis.jpg`, `img_02_a.jpg`, `img_02_b.jpg` (ou les enlever des fiches)
-- [ ] Remplir les cases rouges p4, p5, p6, p7, p9, p10 (recette C)
+- [ ] Ajouter le logo du bas de page : `img/LOGO-TRISTAN-04-2.png` (il manque)
+- [x] Remplir toutes les cases de la mosaïque
+- [ ] Relire et **réécrire avec mes mots** la description de chaque projet (recette B), surtout : Oral-B, les coverings, Animations, Oasis × Nike, Solid Rénovation
+- [ ] Dire ce que j'ai fait dans chaque projet : la demande, mes choix, les logiciels
 
-**Images déjà dans `img/` mais pas encore utilisées**
-- [ ] `comis_1.jpg`
-- [ ] `oasic_2.jpg`
-- [ ] `Fiat_613_odile_tristan.jpg`
-- [ ] `img_04.jpg`, `img_05.jpg`, `img_06.jpg`
-- [ ] `CHEVAL.gif`
-- [ ] `Nepreso mayar_.jpg`, `Nepreso maya_2.jpg` (à renommer sans espaces)
-- [ ] `Forme de decoupe_tristan.jpg` (à renommer sans espaces)
-- [ ] `boite 3.tif` (à exporter en `.jpg`)
+**Images**
+- [ ] Alléger les images trop lourdes pour le web (plus de 1 Mo) : `oasis-nike-maillots.jpg`, `heros-dc.jpg`, `oasis-nike.jpg`, `nespresso-maya.jpg`, `carnaval.jpg`
+- [ ] `boite 3.tif` : l'exporter en `.jpg` s'il doit aller dans le projet Étui AirPods, sinon le supprimer
+- [ ] Projet Smoothie : il n'y a pas d'image, à ajouter si je veux le montrer
 
 **Finitions**
 - [ ] Regarder les corrections de la branche `corrections` et les fusionner ([voir ici](#récupérer-les-corrections-de-la-branche--corrections-))
