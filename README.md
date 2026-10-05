@@ -4,6 +4,10 @@
 > Cherche ce que tu veux faire dans le sommaire, clique, et suis la recette.
 > Une recette = une seule tâche.
 
+🌐 **Mon site en ligne :** https://luxnuts.github.io/01_bookTristanDamour/
+📦 **Mon dépôt GitHub :** https://github.com/Luxnuts/01_bookTristanDamour
+✏️ **Je travaille sur la branche :** `main`
+
 ---
 
 ## Sommaire
@@ -28,8 +32,9 @@
   - [Comment ça marche (en 1 minute)](#comment-ça-marche-en-1-minute)
   - [Ma routine à chaque séance](#ma-routine-à-chaque-séance)
   - [Les branches](#les-branches)
-  - [Récupérer les corrections de la branche « corrections »](#récupérer-les-corrections-de-la-branche--corrections-)
-  - [Mettre le site en ligne (GitHub Pages)](#mettre-le-site-en-ligne-github-pages)
+  - [Passer sur la branche main (une seule fois)](#passer-sur-la-branche-main-une-seule-fois)
+  - [Annuler une correction](#annuler-une-correction)
+  - [Mon site en ligne (GitHub Pages)](#mon-site-en-ligne-github-pages)
   - [Ce qu'il ne faut pas mettre sur GitHub](#ce-quil-ne-faut-pas-mettre-sur-github)
   - [Problèmes fréquents avec GitHub](#problèmes-fréquents-avec-github)
 - [Ma liste de choses à faire](#ma-liste-de-choses-à-faire)
@@ -373,74 +378,74 @@ Tu vois sur quelle branche tu es **en bas à gauche** de VS Code. Clique dessus 
 
 | Branche | À quoi elle sert |
 |---|---|
-| `main` | La version **officielle**, celle qui sera en ligne |
-| `test` | Ta version de travail actuelle |
-| `corrections` | Des corrections proposées, **en attente de ton avis** |
-| `master` | Une ancienne branche, tu peux l'ignorer |
+| `main` | ✅ **La version officielle, celle qui est en ligne.** C'est **ici** que tu travailles. |
+| `corrections` | Les corrections faites avec Claude. Elles sont **déjà dans `main`**, tu peux l'ignorer. |
+| `ancienne-version` | L'ancienne `main` (mai 2026), gardée en archive. Tu peux l'ignorer. |
+| `test`, `master` | Anciennes branches, tu peux les ignorer. |
 
 > ⚠️ Avant de changer de branche, **valide** ton travail en cours.
 > Sinon VS Code refuse, ou tes modifications te suivent sur l'autre branche.
 
 ---
 
-### Récupérer les corrections de la branche « corrections »
+### Passer sur la branche main (une seule fois)
 
-Sur la branche `corrections`, il y a des améliorations qui t'attendent :
+Tout le travail (tes projets + les corrections) est maintenant sur **`main`**.
+Sur ton Mac, dans le **Terminal**, dans le dossier du site, tape **une seule fois** :
 
-- titres des projets visibles sur téléphone
-- plus d'image cassée dans les fiches projet
-- logo corrigé sur mobile
-- menu dans l'ordre de la page
-- menu en barre blanche fixe dès qu'on quitte l'accueil
-- tous les textes du site en français (« Art Works » devient « Projets »)
-- CSS réécrit en **mobile first** (voir [Téléphone, tablette, ordinateur](#téléphone-tablette-ordinateur))
-- bouton d'accueil « Voir mes projets » au lieu de « Scroll to learn more »
-- numéro de téléphone retiré de la section Contact (il ne doit pas être public)
-
-**1. Regarder**
-En bas à gauche de VS Code, clique sur le nom de la branche → choisis `corrections` → ouvre le site et regarde.
-Puis reviens sur `test` pour comparer.
-
-**2. Si ça te plaît : fusionner**
-1. Va sur la branche `test`.
-2. Dans le terminal de VS Code (`Ctrl + ù`), tape :
-   ```
-   git merge corrections
-   ```
-3. C'est fait : `test` contient maintenant tes travaux **et** les corrections.
-
-**3. Si une correction ne te plaît pas**
-Chaque correction a son numéro. Pour en annuler une seule après la fusion :
 ```
-git log --oneline
-```
-Repère le numéro de la correction (une suite de 7 lettres et chiffres, par exemple `574503e` pour le bouton « Voir mes projets »), puis :
-```
-git revert 574503e
-```
-Les autres corrections restent en place.
-
-**4. Quand tout est bon sur `test` : mettre à jour `main`**
-```
+git fetch
 git switch main
-git merge test
-git push
+git pull
 ```
+
+Vérifie en bas à gauche de VS Code : il doit être écrit **`main`**.
+Ensuite, tu restes toujours sur `main` et tu suis [ta routine](#ma-routine-à-chaque-séance).
+
+**Ce qui a changé sur `main` (octobre 2026)**
+
+- tous les projets placés dans la mosaïque, images renommées proprement
+- texte « À propos » écrit, logo du menu repris en bas de page
+- titres des projets visibles sur téléphone, plus d'image cassée dans les fiches
+- menu en barre blanche fixe dès qu'on quitte l'accueil, dans l'ordre de la page
+- CSS réécrit en **mobile first** (voir [Téléphone, tablette, ordinateur](#téléphone-tablette-ordinateur))
+- tous les textes en français, bouton d'accueil « Voir mes projets »
+- numéro de téléphone retiré de la section Contact (il ne doit pas être public)
 
 ---
 
-### Mettre le site en ligne (GitHub Pages)
+### Annuler une correction
 
-GitHub peut héberger ton site **gratuitement**. À faire **une seule fois** :
+Si un changement ne te plaît pas, tu peux l'annuler **tout seul**, sans toucher aux autres.
 
-1. Va sur ton dépôt, sur **github.com**.
-2. **Settings** (Paramètres) → dans le menu de gauche, **Pages**.
-3. Dans **Branch**, choisis `main` et le dossier `/ (root)` → **Save**.
-4. Attends 1 ou 2 minutes, puis recharge la page : l'adresse de ton site s'affiche en haut.
+1. Dans le Terminal, affiche l'historique :
+   ```
+   git log --oneline
+   ```
+2. Repère la ligne du changement. Le numéro, c'est la suite de 7 lettres et chiffres au début (par exemple `574503e` pour le bouton « Voir mes projets »).
+3. Tape :
+   ```
+   git revert 574503e
+   git push
+   ```
 
-Ensuite, **chaque fois que tu envoies sur `main`**, le site en ligne se met à jour tout seul (compte quelques minutes).
+Git crée un nouvel enregistrement qui défait ce changement. Rien n'est effacé de l'historique.
 
-> 💡 Si le site en ligne ne change pas : `Ctrl + F5` pour vider le cache du navigateur.
+---
+
+### Mon site en ligne (GitHub Pages)
+
+Ton site est publié avec **GitHub Pages**, à partir de la branche **`main`** :
+
+👉 **https://luxnuts.github.io/01_bookTristanDamour/**
+
+**Chaque fois que tu envoies sur `main`** (Synchroniser ou `git push`), le site en ligne se met à jour **tout seul**. Compte 1 à 2 minutes.
+
+Pour voir où en est la mise en ligne : sur ton dépôt GitHub, onglet **Actions**. Un rond orange = en cours, une coche verte ✅ = en ligne, une croix rouge ❌ = problème.
+
+> 💡 Si le site en ligne ne change pas : attends 2 minutes, puis `Ctrl + F5` (ou `Cmd + Maj + R` sur Mac) pour vider le cache du navigateur.
+
+> ⚠️ Tout ce qui est sur `main` est **public** : vérifie bien avant d'envoyer (voir juste en dessous).
 
 ---
 
@@ -502,13 +507,15 @@ Coche au fur et à mesure. Une case par séance, c'est déjà très bien. 💪
 - [ ] Projet Smoothie : il n'y a pas d'image, à ajouter si je veux le montrer
 
 **Finitions**
-- [ ] Regarder les corrections de la branche `corrections` et les fusionner ([voir ici](#récupérer-les-corrections-de-la-branche--corrections-))
+- [x] Corrections fusionnées dans `main`
+- [ ] Mettre la même formation sur l'accueil (« RPIP ») et dans « À propos » (« Communication Visuelle Plurimédia »)
 - [ ] Supprimer les fichiers inutiles : `style.css`, `script.js` (et `img/logo-tristan.svg`, le logo « Trist.D », si je ne m'en sers pas)
 - [ ] Créer le fichier `.gitignore` ([voir ici](#ce-quil-ne-faut-pas-mettre-sur-github))
 
 **Mise en ligne**
-- [ ] Mettre à jour `main` avec la bonne version
-- [ ] Activer GitHub Pages ([voir ici](#mettre-le-site-en-ligne-github-pages))
+- [x] Mettre à jour `main` avec la bonne version
+- [x] GitHub Pages activé ([voir ici](#mon-site-en-ligne-github-pages))
+- [ ] Sur mon Mac : [passer sur la branche main](#passer-sur-la-branche-main-une-seule-fois)
 - [ ] Ouvrir le site en ligne sur mon téléphone pour vérifier
 
 ---
