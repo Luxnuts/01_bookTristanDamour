@@ -620,8 +620,8 @@
         </div>
 
         <div class="scroll-indicator">
-            <button class="scroll-indicator-btn" id="scrollBtn" aria-label="Scroll to learn more">
-                Scroll to learn more
+            <button class="scroll-indicator-btn" id="scrollBtn">
+                Voir mes projets
             </button>
         </div>
     </section>
@@ -787,7 +787,7 @@
         const containerBelow = document.getElementById('imagesBelowText');
 
         scrollBtn.addEventListener('click', () => {
-            document.getElementById('a-propos').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('projets').scrollIntoView({ behavior: 'smooth' });
         });
 
         burgerBtn.addEventListener('click', () => {
