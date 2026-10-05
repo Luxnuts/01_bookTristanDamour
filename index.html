@@ -60,10 +60,11 @@
             justify-content: space-between;
             align-items: center;
             z-index: 4000;
-            transition: transform var(--transition-douce);
+            transition: padding var(--transition-douce);
         }
 
-        /* Fond blanc pleine largeur, affiché seulement quand on a quitté l'accueil */
+        /* Barre blanche pleine largeur avec une fine ligne en bas,
+           affichée dès qu'on a quitté l'accueil bleu (classe nav-solid ajoutée en JS) */
         .navbar::before {
             content: '';
             position: absolute;
@@ -72,23 +73,17 @@
             left: 50%;
             width: 100vw;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            background: white;
+            border-bottom: 1px solid var(--bordure);
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: -1;
         }
         .navbar.nav-solid::before { opacity: 1; }
 
-        /* Menu caché quand on descend, il revient quand on remonte */
-        .navbar.nav-hidden { transform: translateY(-100%); }
-
         .logo-link { display: block; width: 45px; transition: var(--transition-douce); }
         .logo-svg { width: 100%; filter: brightness(0) invert(1); transition: var(--transition-douce); }
         .logo-dark { filter: none; }
-        .logo-hidden-completely { opacity: 0 !important; visibility: hidden !important; transform: translateY(-10px); }
-        /* Sur mobile, le logo blanc disparaît une fois sorti de l'accueil bleu */
-        .logo-hidden-mobile { opacity: 0; visibility: hidden; }
 
         /* Menu en ligne : caché sur téléphone, affiché sur ordinateur (voir en bas) */
         .desktop-nav { display: none; gap: 30px; }
@@ -569,7 +564,8 @@
                 max-width: var(--max-largeur-grille);
                 padding: 30px 24px;
             }
-            .navbar.nav-hidden { transform: translate(-50%, -100%); }
+            /* La barre blanche est plus fine que le menu de l'accueil */
+            .navbar.nav-solid { padding-top: 16px; padding-bottom: 16px; }
             .desktop-nav { display: flex; }
             .burger-trigger { display: none; }
 
@@ -597,7 +593,7 @@
 
     <header class="navbar" id="navBarContainer">
         <a href="#accueil" class="logo-link" id="logoLink">
-            <img src="img/logo.svg" alt="Tristan Damour Logo" class="logo-svg" id="mainLogo">
+            <img src="img/logo.svg" alt="Logo Tristan Damour" class="logo-svg" id="mainLogo">
         </a>
         
         <nav class="desktop-nav" id="desktopNav">
@@ -635,7 +631,7 @@
 
     <section class="section-white" id="projets">
         <div class="section-container">
-            <h2 class="section-title">Art Works</h2>
+            <h2 class="section-title">Projets</h2>
             
             <!-- STRUCTURE DE GRILLE STRICTE (FUSIONNÉE SANS PERTE) -->
             <div class="project-grid-wrapper">
@@ -647,7 +643,7 @@
 
                 <!-- Colonne 2 : Petit rectangle rouge du haut -->
                 <div class="mosaic-item red-placeholder box-rouge-haut1" data-project="p4">
-                    <div class="mosaic-overlay"><h3>Test Rouge</h3><p>Placeholder</p></div>
+                    <div class="mosaic-overlay"><h3>Bientôt</h3><p>Projet à venir</p></div>
                 </div>
 
                 <!-- Colonne 3 & 4 : Nespresso Café (Horizontal) -->
@@ -657,17 +653,17 @@
 
                 <!-- Colonne 5 : Petit rectangle rouge du haut (à gauche du rond) -->
                 <div class="mosaic-item red-placeholder box-rouge-haut2" data-project="p5">
-                    <div class="mosaic-overlay"><h3>Test Rouge</h3><p>Placeholder</p></div>
+                    <div class="mosaic-overlay"><h3>Bientôt</h3><p>Projet à venir</p></div>
                 </div>
 
                 <!-- Colonne 5 : Petit bouton rond rouge isolé -->
                 <div class="mosaic-item item-circle red-placeholder box-rouge-bas3" data-project="p6">
-                    <div class="mosaic-overlay"><h3>Bouton</h3><p>Rond</p></div>
+                    <div class="mosaic-overlay"><h3>Bientôt</h3><p>Projet à venir</p></div>
                 </div>
 
                 <!-- Centre : Très grand rectangle central rouge -->
                 <div class="mosaic-item red-placeholder box-grand-rouge" data-project="p7">
-                    <div class="mosaic-overlay"><h3>Zone Principale</h3><p>Grand Rectangle</p></div>
+                    <div class="mosaic-overlay"><h3>Bientôt</h3><p>Projet à venir</p></div>
                 </div>
 
                 <!-- Colonne 6 & 7 : Carnaval (Vertical haut droit) -->
@@ -682,12 +678,12 @@
 
                 <!-- Colonne 2 & 3 : Rectangle rouge horizontal sous la grande zone -->
                 <div class="mosaic-item red-placeholder box-rouge-bas1" data-project="p9">
-                    <div class="mosaic-overlay"><h3>Large Bas</h3><p>Placeholder</p></div>
+                    <div class="mosaic-overlay"><h3>Bientôt</h3><p>Projet à venir</p></div>
                 </div>
 
                 <!-- Colonne 4 : Petit bloc rouge sous la grande zone -->
                 <div class="mosaic-item red-placeholder box-rouge-bas2" data-project="p10">
-                    <div class="mosaic-overlay"><h3>Petit Bas</h3><p>Placeholder</p></div>
+                    <div class="mosaic-overlay"><h3>Bientôt</h3><p>Projet à venir</p></div>
                 </div>
 
                 <!-- Colonne 6 & 7 : Héros et Légendes (Vertical bas droit) -->
@@ -717,7 +713,7 @@
                 </div>
 
                 <div class="contact-footer">
-                    <img src="img/LOGO-TRISTAN-04-2.png" alt="Logo Blanc" class="contact-logo">
+                    <img src="img/LOGO-TRISTAN-04-2.png" alt="Logo Tristan Damour" class="contact-logo">
                 </div>
             </div>
         </div>
@@ -776,10 +772,8 @@
         const burgerBtn = document.getElementById('burgerBtn');
         const fullMenu = document.getElementById('fullMenu');
         const mainLogo = document.getElementById('mainLogo');
-        const logoLink = document.getElementById('logoLink');
         const desktopNav = document.getElementById('desktopNav');
         const heroSection = document.getElementById('accueil');
-        const contactSection = document.getElementById('contact');
         const scrollBtn = document.getElementById('scrollBtn');
         
         const modal = document.getElementById('projectModal');
@@ -844,39 +838,18 @@
         window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
         const navBar = document.getElementById('navBarContainer');
-        let lastScrollY = window.scrollY;
 
-        window.addEventListener('scroll', () => {
-            const heroBottom = heroSection.getBoundingClientRect().bottom;
-            const contactTop = contactSection.getBoundingClientRect().top;
-
-            // Menu : caché quand on descend, visible (avec fond blanc) quand on remonte
-            const scrollY = window.scrollY;
-            const pastHero = heroBottom <= 60;
+        // Menu : transparent et blanc sur l'accueil bleu,
+        // puis barre blanche fixe avec logo et liens foncés dès qu'on descend
+        const updateNavbar = () => {
+            const pastHero = heroSection.getBoundingClientRect().bottom <= 60;
             navBar.classList.toggle('nav-solid', pastHero);
-            if (Math.abs(scrollY - lastScrollY) > 5) { // ignore les tout petits mouvements
-                navBar.classList.toggle('nav-hidden', pastHero && scrollY > lastScrollY);
-                lastScrollY = scrollY;
-            }
-
-            if (contactTop <= 80) {
-                logoLink.classList.add('logo-hidden-completely');
-            } else {
-                logoLink.classList.remove('logo-hidden-completely');
-                
-                if (heroBottom <= 60) {
-                    burgerBtn.classList.add('is-dark');
-                    desktopNav.classList.add('is-dark');
-                    if (window.innerWidth <= 768) logoLink.classList.add('logo-hidden-mobile');
-                    else mainLogo.classList.add('logo-dark');
-                } else {
-                    burgerBtn.classList.remove('is-dark');
-                    desktopNav.classList.remove('is-dark');
-                    mainLogo.classList.remove('logo-dark');
-                    logoLink.classList.remove('logo-hidden-mobile');
-                }
-            }
-        });
+            mainLogo.classList.toggle('logo-dark', pastHero);
+            desktopNav.classList.toggle('is-dark', pastHero);
+            burgerBtn.classList.toggle('is-dark', pastHero);
+        };
+        window.addEventListener('scroll', updateNavbar);
+        updateNavbar(); // si la page s'ouvre déjà plus bas (rechargement, lien #projets)
 
         document.querySelectorAll('.full-menu a').forEach(link => {
             link.addEventListener('click', () => {

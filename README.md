@@ -195,7 +195,7 @@ Une case rouge se remplit en **deux étapes** : la case, puis la fiche.
 
 ```html
 <div class="mosaic-item red-placeholder box-rouge-haut1" data-project="p4">
-    <div class="mosaic-overlay"><h3>Test Rouge</h3><p>Placeholder</p></div>
+    <div class="mosaic-overlay"><h3>Bientôt</h3><p>Projet à venir</p></div>
 </div>
 ```
 
@@ -393,7 +393,8 @@ Sur la branche `corrections`, il y a des améliorations qui t'attendent :
 - plus d'image cassée dans les fiches projet
 - logo corrigé sur mobile
 - menu dans l'ordre de la page
-- menu qui se cache quand on descend et revient quand on remonte
+- menu en barre blanche fixe dès qu'on quitte l'accueil
+- tous les textes du site en français (« Art Works » devient « Projets »)
 - CSS réécrit en **mobile first** (voir [Téléphone, tablette, ordinateur](#téléphone-tablette-ordinateur))
 - bouton d'accueil « Voir mes projets » au lieu de « Scroll to learn more »
 - numéro de téléphone retiré de la section Contact (il ne doit pas être public)
@@ -415,9 +416,9 @@ Chaque correction a son numéro. Pour en annuler une seule après la fusion :
 ```
 git log --oneline
 ```
-Repère le numéro de la correction (par exemple `06c4b0c` pour le menu), puis :
+Repère le numéro de la correction (une suite de 7 lettres et chiffres, par exemple `574503e` pour le bouton « Voir mes projets »), puis :
 ```
-git revert 06c4b0c
+git revert 574503e
 ```
 Les autres corrections restent en place.
 
@@ -508,7 +509,6 @@ Coche au fur et à mesure. Une case par séance, c'est déjà très bien. 💪
 
 **Finitions**
 - [ ] Regarder les corrections de la branche `corrections` et les fusionner ([voir ici](#récupérer-les-corrections-de-la-branche--corrections-))
-- [ ] Choisir une seule langue : le titre « Art Works » est encore en anglais
 - [ ] Supprimer les fichiers inutiles : `style.css`, `script.js`, `log5TY!.svg`
 - [ ] Créer le fichier `.gitignore` ([voir ici](#ce-quil-ne-faut-pas-mettre-sur-github))
 
