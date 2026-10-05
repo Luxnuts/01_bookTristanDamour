@@ -58,6 +58,8 @@
         .logo-svg { width: 100%; filter: brightness(0) invert(1); transition: var(--transition-douce); }
         .logo-dark { filter: none; }
         .logo-hidden-completely { opacity: 0 !important; visibility: hidden !important; transform: translateY(-10px); }
+        /* Sur mobile, le logo blanc disparaît une fois sorti de l'accueil bleu */
+        .logo-hidden-mobile { opacity: 0; visibility: hidden; }
 
         .desktop-nav { display: flex; gap: 30px; }
         .desktop-nav a {
@@ -322,6 +324,17 @@
         .mosaic-item:hover .mosaic-overlay { opacity: 1; }
         .mosaic-item:hover h3, .mosaic-item:hover p { transform: translateY(0); }
 
+        /* Écrans tactiles : pas de survol possible, donc le titre est toujours visible en bas de l'image */
+        @media (hover: none) {
+            .mosaic-overlay {
+                opacity: 1;
+                justify-content: flex-end;
+                background: linear-gradient(to top, rgba(26, 26, 26, 0.8), transparent 60%);
+            }
+            .mosaic-overlay h3, .mosaic-overlay p { transform: none; }
+            .mosaic-overlay p { opacity: 0.9; }
+        }
+
         /* --- CONTACT --- */
         #contact {
             background-color: var(--bleu-principal);
@@ -529,8 +542,8 @@
     <nav class="full-menu" id="fullMenu">
         <ul>
             <li><a href="#accueil">Accueil</a></li>
-            <li><a href="#projets">Projets</a></li>
             <li><a href="#a-propos">À Propos</a></li>
+            <li><a href="#projets">Projets</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
@@ -542,8 +555,8 @@
         
         <nav class="desktop-nav" id="desktopNav">
             <a href="#accueil">Accueil</a>
-            <a href="#projets">Projets</a>
             <a href="#a-propos">À propos</a>
+            <a href="#projets">Projets</a>
             <a href="#contact">Contact</a>
         </nav>
     </header>
@@ -667,7 +680,7 @@
         <span class="modal-close">&times;</span>
         <div class="modal-grid">
             <div class="modal-left-col">
-                <img src="" alt="" class="modal-main-img" id="modalTargetImg">
+                <img alt="" class="modal-main-img" id="modalTargetImg">
             </div>
             <div class="modal-right-col">
                 <div class="modal-info">
@@ -756,10 +769,12 @@
                 if (!project) {
                     document.getElementById('modalTitle').innerText = "Projet en cours";
                     document.getElementById('modalDesc').innerText = "Les détails graphiques de ce projet seront bientôt disponibles.";
-                    modalImg.src = "";
-                    modalImg.alt = "En cours";
+                    modalImg.removeAttribute('src');
+                    modalImg.alt = "";
+                    modalImg.style.display = 'none'; // pas d'image : on la cache au lieu d'afficher une image cassée
                     containerBelow.innerHTML = "";
                 } else {
+                    modalImg.style.display = '';
                     document.getElementById('modalTitle').innerText = project.title;
                     document.getElementById('modalDesc').innerText = project.desc;
                     modalImg.src = project.mainImage;
